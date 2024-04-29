@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductApiController extends Controller
 {
@@ -12,7 +13,8 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        return 'index';
+        $products = Product::all();
+        return $products;
     }
 
     /**
@@ -20,7 +22,24 @@ class ProductApiController extends Controller
      */
     public function store(Request $request)
     {
-        return 'store';
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|decimal:2|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $product = Product::create($request->all());
+
+        return response()->json([
+            'message' => 'Product created successfully',
+            'status' => 'success',
+            'data' => $product
+        ], 201);
     }
 
     /**
@@ -28,7 +47,8 @@ class ProductApiController extends Controller
      */
     public function show(Product $product)
     {
-        return 'show';
+        $product = Product::find($product->id);
+        return $product;
     }
 
     /**
@@ -36,7 +56,30 @@ class ProductApiController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        return 'update';
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|decimal:2|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $product = Product::find($product->id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Product not found', 'status' => 'error'], 404);
+        }
+
+        $product->update($request->all());
+
+        return response()->json([
+            'message' => 'Product updated successfully',
+            'status' => 'success',
+            'data' => $product
+        ]);
     }
 
     /**
@@ -44,6 +87,12 @@ class ProductApiController extends Controller
      */
     public function destroy(Product $product)
     {
-        return 'destroy';
+        $product = Product::find($product->id);
+
+        if (!$product) return response()->json(['message' => 'Resource not found', 'status' => 'error'], 404);
+
+        $product->delete();
+
+        return response()->json(['message' => 'Resource deleted successfully', 'status' => 'success'], 200);
     }
 }

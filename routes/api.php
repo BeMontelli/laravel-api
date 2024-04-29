@@ -15,6 +15,7 @@ Route::prefix('v1')->group(function () {
             'title' => 'Stock Management App',
         ]);
     });
+
     Route::resource('products', ProductApiController::class);
     // Route::get('/products', [ProductApiController::class, 'index'])->name('products.index');
     // Route::get('/products/{id}', [ProductApiController::class, 'show'])->name('products.show');
