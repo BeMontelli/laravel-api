@@ -10,14 +10,6 @@ Route::get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
 
     Route::get('/welcome', function (Request $request) {
-        return 'Stock Managament App';
-    });
-
-});
-
-Route::prefix('v2')->group(function () {
-
-    Route::get('/welcome', function (Request $request) {
         return response()->json([
             'title' => 'Stock Managament App',
         ]);
