@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductApiController;
+use App\Http\Controllers\UserApiController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,5 +24,6 @@ Route::prefix('v1')->group(function () {
     // Route::put('/products/{id}', [ProductApiController::class, 'update'])->name('products.update');
     // Route::delete('/products/{id}', [ProductApiController::class, 'destroy'])->name('products.destroy');
 
+    Route::resource('users', UserApiController::class);
 });
 
