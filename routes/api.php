@@ -18,6 +18,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::resource('products', ProductApiController::class)
+        ->middleware('auth:sanctum')
         ->name('index', 'products.index')
         ->name('show', 'products.show')
         ->name('store', 'products.store')
@@ -30,6 +31,7 @@ Route::prefix('v1')->group(function () {
     // Route::delete('/products/{id}', [ProductApiController::class, 'destroy'])->name('products.destroy');
 
     Route::resource('users', UserApiController::class)
+        ->middleware('auth:sanctum')
         ->name('index', 'users.index')
         ->name('show', 'users.show')
         ->name('store', 'users.store')
