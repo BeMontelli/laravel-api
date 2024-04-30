@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\UserApiController;
+use App\Http\Controllers\CategoryApiController;
 
 Route::prefix('v1')->group(function () {
 
@@ -28,6 +29,14 @@ Route::prefix('v1')->group(function () {
         ->name('store', 'users.store')
         ->name('update', 'users.update')
         ->name('destroy', 'users.delete');
+
+    Route::resource('categories', CategoryApiController::class)
+        ->middleware('auth:sanctum')
+        ->name('index', 'categories.index')
+        ->name('show', 'categories.show')
+        ->name('store', 'categories.store')
+        ->name('update', 'categories.update')
+        ->name('destroy', 'categories.delete');
 
     Route::post('/login', [UserApiController::class, 'login'])->name('users.login');
     Route::post('/register', [UserApiController::class, 'register'])->name('users.register');
