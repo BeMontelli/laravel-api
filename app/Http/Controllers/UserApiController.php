@@ -137,12 +137,7 @@ class UserApiController extends Controller
             if(auth('sanctum')->check()){
                 auth()->user()->tokens()->delete();
             }
-            $token = Auth::user()->createToken('app_token_'.Auth::user()->id,[
-                'create',
-                'read',
-                'update',
-                'delete',
-            ])->plainTextToken;
+            $token = Auth::user()->createToken('app_token_'.Auth::user()->id,['*'])->plainTextToken;
 
             return response()->json([
                 'message' => 'Login successful',
@@ -182,13 +177,7 @@ class UserApiController extends Controller
         }
 
         $user = User::create($request->all());
-
-        $token = $user->createToken('app_token_'.$user->id,[
-            'create',
-            'read',
-            'update',
-            'delete',
-        ])->plainTextToken;
+        $token = $user->createToken('app_token_'.$user->id,['*'])->plainTextToken;
 
         return response()->json([
             'message' => 'User created successfully',
