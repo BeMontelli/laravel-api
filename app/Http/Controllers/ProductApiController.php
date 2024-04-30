@@ -74,7 +74,7 @@ class ProductApiController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $product = Product::with('categories')->find($product->id);
+        $product = Product::find($product->id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found', 'status' => 'error'], 404);
