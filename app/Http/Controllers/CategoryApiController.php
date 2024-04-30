@@ -46,7 +46,7 @@ class CategoryApiController extends Controller
      */
     public function show(Category $category)
     {
-        $category = Category::find($category->id);
+        $category = Category::with('products')->find($category->id);
         return $category;
     }
 
