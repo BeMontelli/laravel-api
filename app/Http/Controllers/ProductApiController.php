@@ -27,6 +27,8 @@ class ProductApiController extends Controller
             'description' => 'required|string',
             'price' => 'required|decimal:2|min:0',
             'stock' => 'required|integer|min:0',
+            'categories' => 'sometimes|array',
+            'categories.*' => 'exists:categories,id',
         ]);
 
         if ($validator->fails()) {
@@ -34,6 +36,9 @@ class ProductApiController extends Controller
         }
 
         $product = Product::create($request->all());
+
+        $product->categories()->attach($request->categories);
+        $product = Product::with('categories')->find($product->id);
 
         return response()->json([
             'message' => 'Product created successfully',
@@ -61,19 +66,24 @@ class ProductApiController extends Controller
             'description' => 'required|string',
             'price' => 'required|decimal:2|min:0',
             'stock' => 'required|integer|min:0',
+            'categories' => 'sometimes|array',
+            'categories.*' => 'exists:categories,id',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $product = Product::find($product->id);
+        $product = Product::with('categories')->find($product->id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found', 'status' => 'error'], 404);
         }
 
         $product->update($request->all());
+
+        $product->categories()->sync($request->categories);
+        $product = Product::with('categories')->find($product->id);
 
         return response()->json([
             'message' => 'Product updated successfully',
