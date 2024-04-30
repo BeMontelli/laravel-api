@@ -16,10 +16,8 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence();
-
         return [
-            'name' => $title,
+            'name' => fake()->sentence(rand(2,3)),
             'description' => fake()->sentence(4),
             'stock' => rand(0,100),
             'price' => mt_rand (0*10, 10*10) / 10,
