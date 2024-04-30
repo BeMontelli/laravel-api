@@ -13,7 +13,7 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('categories')->get();
         return $products;
     }
 
@@ -47,7 +47,7 @@ class ProductApiController extends Controller
      */
     public function show(Product $product)
     {
-        $product = Product::find($product->id);
+        $product = Product::with('categories')->find($product->id);
         return $product;
     }
 
