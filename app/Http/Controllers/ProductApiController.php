@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProductApiController extends Controller
 {
@@ -22,6 +23,10 @@ class ProductApiController extends Controller
      */
     public function store(Request $request)
     {
+        if(!empty($request->categories) && !is_array($request->categories)) {
+            $request->merge(['categories' => json_decode($request->categories)]);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'description' => 'required|string',
@@ -29,11 +34,18 @@ class ProductApiController extends Controller
             'stock' => 'required|integer|min:0',
             'categories' => 'sometimes|array',
             'categories.*' => 'exists:categories,id',
+            'imagefile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        $folders = 'images/uploads/'.date("Y/m/d");
+        $extension = $request->imagefile->extension();
+        $imageName = time().'-'.Str::slug(basename($request->imagefile->getClientOriginalName(), ".".$extension), '-').'.'.$extension;
+        $request->imagefile->move(public_path($folders), $imageName);
+        $request->request->add(['image' => $folders.'/'.$imageName]);
 
         $product = Product::create($request->all());
 
@@ -68,6 +80,7 @@ class ProductApiController extends Controller
             'stock' => 'required|integer|min:0',
             'categories' => 'sometimes|array',
             'categories.*' => 'exists:categories,id',
+            'imagefile' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
