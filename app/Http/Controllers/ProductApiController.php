@@ -73,6 +73,10 @@ class ProductApiController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        if(!empty($request->categories) && !is_array($request->categories)) {
+            $request->merge(['categories' => json_decode($request->categories)]);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'description' => 'required|string',
@@ -91,6 +95,14 @@ class ProductApiController extends Controller
 
         if (!$product) {
             return response()->json(['message' => 'Product not found', 'status' => 'error'], 404);
+        }
+
+        if($request->imagefile) {
+            $folders = 'images/uploads/'.date("Y/m/d");
+            $extension = $request->imagefile->extension();
+            $imageName = time().'-'.Str::slug(basename($request->imagefile->getClientOriginalName(), ".".$extension), '-').'.'.$extension;
+            $request->imagefile->move(public_path($folders), $imageName);
+            $request->request->add(['image' => $folders.'/'.$imageName]);
         }
 
         $product->update($request->all());
