@@ -6,11 +6,24 @@ use App\Http\Requests\StoreCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
+use OpenApi\Annotations as OA;
 
 class CategoryApiController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @OA\Get(
+     *     path="/api/v1/categories",
+     *     summary="Get all categories",
+     *     tags={"Categories"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     )
+     * )
      */
     public function index()
     {
@@ -20,6 +33,22 @@ class CategoryApiController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @OA\Post(
+     *     path="/api/v1/categories",
+     *     summary="Create a new category",
+     *     tags={"Categories"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Category created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -43,6 +72,28 @@ class CategoryApiController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @OA\Get(
+     *     path="/api/v1/categories/{category}",
+     *     summary="Get a specific category",
+     *     tags={"Categories"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category to retrieve",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     )
+     * )
      */
     public function show(Category $category)
     {
@@ -52,6 +103,32 @@ class CategoryApiController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @OA\Put(
+     *     path="/api/v1/categories/{category}",
+     *     summary="Update a specific category",
+     *     tags={"Categories"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Category updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     )
+     * )
      */
     public function update(Request $request, Category $category)
     {
@@ -81,6 +158,27 @@ class CategoryApiController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @OA\Delete(
+     *     path="/api/v1/categories/{category}",
+     *     summary="Delete a specific category",
+     *     tags={"Categories"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="category",
+     *         in="path",
+     *         description="ID of the category to delete",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Category deleted successfully"
+     *     )
+     * )
      */
     public function destroy(Category $category)
     {

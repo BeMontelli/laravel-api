@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Documentation : Laravel API',
             ],
 
             'routes' => [
@@ -40,6 +40,8 @@ return [
                 */
                 'annotations' => [
                     base_path('app'),
+                    /*base_path('App/Models'),
+                    base_path('App/Http/Controllers'),*/
                 ],
 
             ],

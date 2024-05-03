@@ -6,11 +6,24 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use OpenApi\Annotations as OA;
 
 class UserApiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of User.
+     *
+     * @OA\Get(
+     *     path="/api/v1/users",
+     *     summary="Get all users",
+     *     tags={"Users"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function index()
     {
@@ -19,7 +32,23 @@ class UserApiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created User in database.
+     *
+     * @OA\Post(
+     *     path="/api/v1/users",
+     *     summary="Create a new user",
+     *     tags={"Users"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -55,7 +84,29 @@ class UserApiController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified User.
+     *
+     * @OA\Get(
+     *     path="/api/v1/users/{user}",
+     *     summary="Get a specific user",
+     *     tags={"Users"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="ID of the user to retrieve",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function show(User $user)
     {
@@ -64,7 +115,33 @@ class UserApiController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified User from database.
+     *
+     * @OA\Put(
+     *     path="/api/v1/users/{user}",
+     *     summary="Update a specific user",
+     *     tags={"Users"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="ID of the user to update",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      */
     public function update(Request $request, User $user)
     {
@@ -106,7 +183,28 @@ class UserApiController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified User from database.
+     *
+     * @OA\Delete(
+     *     path="/api/v1/users/{user}",
+     *     summary="Delete a specific user",
+     *     tags={"Users"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="ID of the user to delete",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="User deleted successfully"
+     *     )
+     * )
      */
     public function destroy(User $user)
     {
@@ -119,6 +217,25 @@ class UserApiController extends Controller
         return response()->json(['message' => 'Resource deleted successfully', 'status' => 'success'], 200);
     }
 
+    /**
+     * Login a User and return token.
+     *
+     * @OA\Post(
+     *     path="/api/v1/login",
+     *     summary="Log a user and return a token",
+     *     tags={"Auth"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -152,6 +269,25 @@ class UserApiController extends Controller
         }
     }
 
+    /**
+     * Store a newly created User in database and return token.
+     *
+     * @OA\Post(
+     *     path="/api/v1/register",
+     *     summary="Register a new user and return a token",
+     *     tags={"Auth"},
+     *     security={{ "sanctum": {} }},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
