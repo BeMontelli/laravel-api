@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['pivot'];
+
     protected $fillable = [
         'title',
         'description',

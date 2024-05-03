@@ -14,6 +14,10 @@ class ProductApiController extends Controller
      */
     public function index()
     {
+//        $products = Product::all();
+//        $products->load(['categories' => function ($query) {
+//            $query->select('categories.id', 'categories.title', 'categories.description');
+//        }]);
         $products = Product::with('categories')->get();
         return $products;
     }
