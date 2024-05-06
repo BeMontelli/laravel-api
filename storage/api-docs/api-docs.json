@@ -368,7 +368,6 @@
                                     "description",
                                     "price",
                                     "stock",
-                                    "categories",
                                     "imagefile"
                                 ],
                                 "properties": {
@@ -524,9 +523,7 @@
                                     "name",
                                     "description",
                                     "price",
-                                    "stock",
-                                    "categories",
-                                    "imagefile"
+                                    "stock"
                                 ],
                                 "properties": {
                                     "name": {
@@ -1069,12 +1066,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         },
         "/api/v1/register": {

@@ -334,7 +334,6 @@ class UserApiController extends Controller
      *     path="/api/v1/login",
      *     summary="Login with email and password",
      *     tags={"Auth"},
-     *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(

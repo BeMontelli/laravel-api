@@ -58,7 +58,7 @@ class ProductApiController extends Controller
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={"name", "description", "price", "stock", "categories", "imagefile"},
+     *                 required={"name", "description", "price", "stock", "imagefile"},
      *                 @OA\Property(property="name", type="string", example="Productname"),
      *                 @OA\Property(property="description", type="string", example="Product description"),
      *                 @OA\Property(property="price", type="number", format="float", example="12.25"),
@@ -185,7 +185,7 @@ class ProductApiController extends Controller
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={"name", "description", "price", "stock", "categories", "imagefile"},
+     *                 required={"name", "description", "price", "stock"},
      *                 @OA\Property(property="name", type="string", example="Productname"),
      *                 @OA\Property(property="description", type="string", example="Product description"),
      *                 @OA\Property(property="price", type="number", format="float", example="12.25"),
