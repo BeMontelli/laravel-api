@@ -21,7 +21,17 @@ class ProductApiController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Product")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -49,8 +59,15 @@ class ProductApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Product created successfully",
+     *         description="Resource created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -86,7 +103,7 @@ class ProductApiController extends Controller
         $product = Product::with('categories')->find($product->id);
 
         return response()->json([
-            'message' => 'Product created successfully',
+            'message' => 'Resource created successfully',
             'status' => 'success',
             'data' => $product
         ], 201);
@@ -114,6 +131,13 @@ class ProductApiController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -147,8 +171,15 @@ class ProductApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Product updated successfully",
+     *         description="Resource updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -175,7 +206,7 @@ class ProductApiController extends Controller
         $product = Product::find($product->id);
 
         if (!$product) {
-            return response()->json(['message' => 'Product not found', 'status' => 'error'], 404);
+            return response()->json(['message' => 'Resource not found', 'status' => 'error'], 404);
         }
 
         if($request->imagefile) {
@@ -192,7 +223,7 @@ class ProductApiController extends Controller
         $product = Product::with('categories')->find($product->id);
 
         return response()->json([
-            'message' => 'Product updated successfully',
+            'message' => 'Resource updated successfully',
             'status' => 'success',
             'data' => $product
         ]);
@@ -218,7 +249,14 @@ class ProductApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Product deleted successfully"
+     *         description="Resource deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */

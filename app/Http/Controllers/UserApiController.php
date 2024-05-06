@@ -21,7 +21,17 @@ class UserApiController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -73,8 +83,15 @@ class UserApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User created successfully",
+     *         description="Resource created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -105,7 +122,7 @@ class UserApiController extends Controller
         $user = User::create($request->all());
 
         return response()->json([
-            'message' => 'User created successfully',
+            'message' => 'Resource created successfully',
             'status' => 'success',
             'data' => $user
         ], 201);
@@ -133,6 +150,13 @@ class UserApiController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -179,7 +203,14 @@ class UserApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="User not found"
+     *         description="Resource not found"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -210,13 +241,13 @@ class UserApiController extends Controller
         $user = User::find($user->id);
 
         if (!$user) {
-            return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
+            return response()->json(['message' => 'Resource not found', 'status' => 'error'], 404);
         }
 
         $user->update($request->all());
 
         return response()->json([
-            'message' => 'User updated successfully',
+            'message' => 'Resource updated successfully',
             'status' => 'success',
             'data' => $user
         ]);
@@ -247,6 +278,13 @@ class UserApiController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Resource not found"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -294,7 +332,7 @@ class UserApiController extends Controller
      *         response=200,
      *         description="User logged successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="User created successfully"),
+     *             @OA\Property(property="message", type="string", example="Login successful"),
      *             @OA\Property(property="status", type="string", example="success"),
      *             @OA\Property(
      *                 property="data",
@@ -306,7 +344,11 @@ class UserApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Unauthorized",
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *             @OA\Property(property="status", type="string", example="error")
+     *         )
      *     )
      * )
      */
@@ -384,9 +426,9 @@ class UserApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User created successfully",
+     *         description="Register successfull",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="User created successfully"),
+     *             @OA\Property(property="message", type="string", example="Register successfull"),
      *             @OA\Property(property="status", type="string", example="success"),
      *             @OA\Property(
      *                 property="data",
@@ -430,7 +472,7 @@ class UserApiController extends Controller
         $token = $user->createToken('app_token_'.$user->id,['*'])->plainTextToken;
 
         return response()->json([
-            'message' => 'User created successfully',
+            'message' => 'Register successfull',
             'status' => 'success',
             'data' => [
                 "user" => $user,

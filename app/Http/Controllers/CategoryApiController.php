@@ -21,7 +21,17 @@ class CategoryApiController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Category")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -45,8 +55,15 @@ class CategoryApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Category created successfully",
+     *         description="Resource created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -64,7 +81,7 @@ class CategoryApiController extends Controller
         $category = Category::create($request->all());
 
         return response()->json([
-            'message' => 'Category created successfully',
+            'message' => 'Resource created successfully',
             'status' => 'success',
             'data' => $category
         ], 201);
@@ -92,6 +109,13 @@ class CategoryApiController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -125,8 +149,15 @@ class CategoryApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Category updated successfully",
+     *         description="Resource updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
@@ -144,13 +175,13 @@ class CategoryApiController extends Controller
         $category = Category::find($category->id);
 
         if (!$category) {
-            return response()->json(['message' => 'Category not found', 'status' => 'error'], 404);
+            return response()->json(['message' => 'Resource not found', 'status' => 'error'], 404);
         }
 
         $category->update($request->all());
 
         return response()->json([
-            'message' => 'Category updated successfully',
+            'message' => 'Resource updated successfully',
             'status' => 'success',
             'data' => $category
         ]);
@@ -176,7 +207,14 @@ class CategoryApiController extends Controller
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Category deleted successfully"
+     *         description="Resource deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated")
+     *         )
      *     )
      * )
      */
