@@ -41,7 +41,35 @@ class UserApiController extends Controller
      *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="John Doe"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     format="email",
+     *                     example="john@example.com"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                     format="password",
+     *                     example="password123"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     type="string",
+     *                     format="password",
+     *                     example="password123"
+     *                 ),
+     *                 required={"name", "email", "password", "password_confirmation"}
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -136,10 +164,22 @@ class UserApiController extends Controller
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
+     * @OA\Response(
+     *     response=200,
+     *     description="User updated successfully",
+     *     @OA\JsonContent(
+     *         @OA\Property(property="message", type="string", example="User updated successfully"),
+     *         @OA\Property(property="status", type="string", example="success"),
+     *         @OA\Property(property="data", type="object", ref="#/components/schemas/User")
+     *     )
+     * ),
      *     @OA\Response(
-     *         response=200,
-     *         description="User updated successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         response=422,
+     *         description="Resource deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found"
      *     )
      * )
      */
@@ -201,8 +241,12 @@ class UserApiController extends Controller
      *         )
      *     ),
      *     @OA\Response(
-     *         response=204,
-     *         description="User deleted successfully"
+     *         response=200,
+     *         description="Resource deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Resource not found"
      *     )
      * )
      */
@@ -222,17 +266,47 @@ class UserApiController extends Controller
      *
      * @OA\Post(
      *     path="/api/v1/login",
-     *     summary="Log a user and return a token",
+     *     summary="Login with email and password",
      *     tags={"Auth"},
      *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     format="email",
+     *                     example="john@example.com"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                     format="password",
+     *                     example="password123"
+     *                 ),
+     *                 required={"email", "password"}
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *         response=201,
-     *         description="User created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         response=200,
+     *         description="User logged successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User created successfully"),
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *                 @OA\Property(property="token", type="string", example="token_here")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *     )
      * )
      */
@@ -274,17 +348,57 @@ class UserApiController extends Controller
      *
      * @OA\Post(
      *     path="/api/v1/register",
-     *     summary="Register a new user and return a token",
+     *     summary="Register a new user",
      *     tags={"Auth"},
-     *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="John Doe"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     format="email",
+     *                     example="john@example.com"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                     format="password",
+     *                     example="password123"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     type="string",
+     *                     format="password",
+     *                     example="password123"
+     *                 ),
+     *                 required={"name", "email", "password", "password_confirmation"}
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
      *         description="User created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User created successfully"),
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *                 @OA\Property(property="token", type="string", example="token_here")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
      *     )
      * )
      */

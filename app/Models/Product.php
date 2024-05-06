@@ -9,74 +9,39 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     title="Product",
- *     description="Product model",
- *     required={"name", "description", "price", "image", "stock"},
- *     @OA\Xml(
- *         name="Product"
+ *     schema="Product",
+ *     required={"name", "description", "price", "stock", "image"},
+ *     @OA\Property(
+ *          property="name",
+ *          type="string",
+ *          description="The name of the product"
+ *     ),
+ *     @OA\Property(
+ *          property="description",
+ *          type="string",
+ *          description="The description of the product"
+ *     ),
+ *     @OA\Property(
+ *          property="price",
+ *          type="number",
+ *          format="float",
+ *          description="The price of the product"
+ *     ),
+ *     @OA\Property(
+ *          property="image",
+ *          type="string",
+ *          description="The image of the product"
+ *     ),
+ *     @OA\Property(
+ *          property="stock",
+ *          type="integer",
+ *          description="The stock of the product"
  *     )
  * )
  */
 class Product extends Model
 {
     use HasFactory;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="name",
-     *     type="string",
-     *     description="Product name",
-     *     example="Laptop"
-     * )
-     */
-    protected $name;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="description",
-     *     type="string",
-     *     description="Product description",
-     *     example="A powerful laptop with high-end specifications."
-     * )
-     */
-    protected $description;
-
-    /**
-     * @var float
-     * @OA\Property(
-     *     property="price",
-     *     type="number",
-     *     format="float",
-     *     description="Product price",
-     *     example=999.99
-     * )
-     */
-    protected $price;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="image",
-     *     type="string",
-     *     format="uri",
-     *     description="URL of the product image",
-     *     example="images/uploads/product.jpg"
-     * )
-     */
-    protected $image;
-
-    /**
-     * @var integer
-     * @OA\Property(
-     *     property="stock",
-     *     type="integer",
-     *     description="Product stock quantity",
-     *     example=100
-     * )
-     */
-    protected $stock;
 
     protected $hidden = ['pivot'];
 

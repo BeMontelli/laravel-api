@@ -13,11 +13,28 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     title="User",
- *     description="User model",
- *     @OA\Xml(
- *         name="User"
- *     )
+ *     schema="User",
+ *     required={"name", "email", "password"},
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         example="John Doe",
+ *         description="The name of the user"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         format="email",
+ *         example="johndoe@example.fr",
+ *         description="The email of the user"
+ *     ),
+ *     @OA\Property(
+ *         property="password",
+ *         type="string",
+ *         format="password",
+ *         example="password123",
+ *         description="The password of the user"
+ *     ),
  * )
  */
 class User extends Authenticatable
@@ -29,57 +46,11 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     /**
-     * @var string
-     * @OA\Property(
-     *     property="name",
-     *     type="string",
-     *     description="User's name",
-     *     example="John Doe"
-     * )
-     */
-    protected $name;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="email",
-     *     type="string",
-     *     format="email",
-     *     description="User's email address",
-     *     example="john@example.com"
-     * )
-     */
-    protected $email;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="password",
-     *     type="string",
-     *     format="password",
-     *     description="User's password",
-     *     example="password123"
-     * )
-     */
-    protected $password;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="profile_photo_url",
-     *     type="string",
-     *     format="uri",
-     *     description="URL of the user's profile photo",
-     *     example="https://example.com/profile.jpg"
-     * )
-     */
-    private $profile_photo_url;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'email',

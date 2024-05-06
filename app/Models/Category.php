@@ -9,38 +9,23 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     title="Category",
- *     description="Category model",
- *     required={"title"},
- *     @OA\Xml(
- *         name="Category"
- *     )
+ *     schema="Category",
+ *     required={"title","description"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         description="The title of the category"
+ *     ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         description="The description of the category"
+ *     ),
  * )
  */
 class Category extends Model
 {
     use HasFactory;
-
-    /**
-     * @var string
-     * @OA\Property(
-     *     property="title",
-     *     type="string",
-     *     description="Category title",
-     *     example="Electronics"
-     * )
-     */
-    protected $title;
-
-    /**
-     * @var string|null
-     * @OA\Property(
-     *     property="description",
-     *     type="string",
-     *     description="Category description",
-     *     example="A category for electronic products."
-     * )
-     */
 
     protected $hidden = ['pivot'];
 

@@ -407,7 +407,34 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -504,10 +531,29 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User updated successfully"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Resource deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -536,8 +582,11 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "User deleted successfully"
+                    "200": {
+                        "description": "Resource deleted successfully"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "security": [
@@ -552,7 +601,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Log a user and return a token",
+                "summary": "Login with email and password",
                 "description": "Login a User and return token.",
                 "operationId": "054a9091d5106d9504918a1673c67234",
                 "requestBody": {
@@ -560,21 +609,62 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "User created successfully",
+                    "200": {
+                        "description": "User logged successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User created successfully"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "$ref": "#/components/schemas/User"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "token_here"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -589,7 +679,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Register a new user and return a token",
+                "summary": "Register a new user",
                 "description": "Store a newly created User in database and return token.",
                 "operationId": "83bd8159f8a8c1f094dd0a874df4574f",
                 "requestBody": {
@@ -597,7 +687,34 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -608,121 +725,118 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User created successfully"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "$ref": "#/components/schemas/User"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "token_here"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         }
     },
     "components": {
         "schemas": {
             "Category": {
-                "title": "Category",
-                "description": "Category model",
                 "required": [
-                    "title"
+                    "title",
+                    "description"
                 ],
                 "properties": {
                     "title": {
-                        "description": "Category title",
-                        "type": "string",
-                        "example": "Electronics"
+                        "description": "The title of the category",
+                        "type": "string"
                     },
                     "description": {
-                        "description": "Category description",
-                        "type": "string",
-                        "example": "A category for electronic products."
+                        "description": "The description of the category",
+                        "type": "string"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "Category"
-                }
+                "type": "object"
             },
             "Product": {
-                "title": "Product",
-                "description": "Product model",
                 "required": [
                     "name",
                     "description",
                     "price",
-                    "image",
-                    "stock"
+                    "stock",
+                    "image"
                 ],
                 "properties": {
                     "name": {
-                        "description": "Product name",
-                        "type": "string",
-                        "example": "Laptop"
+                        "description": "The name of the product",
+                        "type": "string"
                     },
                     "description": {
-                        "description": "Product description",
-                        "type": "string",
-                        "example": "A powerful laptop with high-end specifications."
+                        "description": "The description of the product",
+                        "type": "string"
                     },
                     "price": {
-                        "description": "Product price",
+                        "description": "The price of the product",
                         "type": "number",
-                        "format": "float",
-                        "example": 999.99
+                        "format": "float"
                     },
                     "image": {
-                        "description": "URL of the product image",
-                        "type": "string",
-                        "format": "uri",
-                        "example": "images/uploads/product.jpg"
+                        "description": "The image of the product",
+                        "type": "string"
                     },
                     "stock": {
-                        "description": "Product stock quantity",
-                        "type": "integer",
-                        "example": 100
+                        "description": "The stock of the product",
+                        "type": "integer"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "Product"
-                }
+                "type": "object"
             },
             "User": {
-                "title": "User",
-                "description": "User model",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
                 "properties": {
                     "name": {
-                        "description": "User's name",
+                        "description": "The name of the user",
                         "type": "string",
                         "example": "John Doe"
                     },
                     "email": {
-                        "description": "User's email address",
+                        "description": "The email of the user",
                         "type": "string",
                         "format": "email",
-                        "example": "john@example.com"
+                        "example": "johndoe@example.fr"
                     },
                     "password": {
-                        "description": "User's password",
+                        "description": "The password of the user",
                         "type": "string",
                         "format": "password",
                         "example": "password123"
-                    },
-                    "profile_photo_url": {
-                        "description": "URL of the user's profile photo",
-                        "type": "string",
-                        "format": "uri",
-                        "example": "https://example.com/profile.jpg"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "User"
-                }
+                "type": "object"
             }
         }
     }
