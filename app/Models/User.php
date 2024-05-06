@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     schema="User",
  *     required={"name", "email", "password"},
+ *     @OA\Property(property="id", type="integer", example=123),
  *     @OA\Property(
  *         property="name",
  *         type="string",
@@ -35,6 +36,26 @@ use OpenApi\Annotations as OA;
  *         example="password123",
  *         description="The password of the user"
  *     ),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-05-06T12:34:56Z",
+ *         description="The timestamp when the user was created"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-05-06T12:34:56Z",
+ *         description="The timestamp when the user was last updated"
+ *     ),
+ *     @OA\Property(
+ *         property="profile_photo_url",
+ *         type="string",
+ *         example="https://ui-avatars.com/api/?name=T+U&color=7F9CF5&background=EBF4FF",
+ *         description="The image URL of the user"
+ *     )
  * )
  */
 class User extends Authenticatable

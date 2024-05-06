@@ -767,6 +767,10 @@
                     "description"
                 ],
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 123
+                    },
                     "title": {
                         "description": "The title of the category",
                         "type": "string"
@@ -774,6 +778,18 @@
                     "description": {
                         "description": "The description of the category",
                         "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The timestamp when the user was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "description": "The timestamp when the user was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
                     }
                 },
                 "type": "object"
@@ -787,6 +803,10 @@
                     "image"
                 ],
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 123
+                    },
                     "name": {
                         "description": "The name of the product",
                         "type": "string"
@@ -800,13 +820,32 @@
                         "type": "number",
                         "format": "float"
                     },
-                    "image": {
-                        "description": "The image of the product",
-                        "type": "string"
-                    },
                     "stock": {
                         "description": "The stock of the product",
                         "type": "integer"
+                    },
+                    "image": {
+                        "description": "The image URL of the user",
+                        "type": "string",
+                        "example": "images/uploads/2024/05/02/image.jpg"
+                    },
+                    "created_at": {
+                        "description": "The timestamp when the user was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "description": "The timestamp when the user was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
+                    },
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Category"
+                        }
                     }
                 },
                 "type": "object"
@@ -818,6 +857,10 @@
                     "password"
                 ],
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 123
+                    },
                     "name": {
                         "description": "The name of the user",
                         "type": "string",
@@ -834,6 +877,23 @@
                         "type": "string",
                         "format": "password",
                         "example": "password123"
+                    },
+                    "created_at": {
+                        "description": "The timestamp when the user was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "description": "The timestamp when the user was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-06T12:34:56Z"
+                    },
+                    "profile_photo_url": {
+                        "description": "The image URL of the user",
+                        "type": "string",
+                        "example": "https://ui-avatars.com/api/?name=T+U&color=7F9CF5&background=EBF4FF"
                     }
                 },
                 "type": "object"

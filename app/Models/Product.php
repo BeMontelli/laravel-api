@@ -11,6 +11,7 @@ use OpenApi\Annotations as OA;
  * @OA\Schema(
  *     schema="Product",
  *     required={"name", "description", "price", "stock", "image"},
+ *     @OA\Property(property="id", type="integer", example=123),
  *     @OA\Property(
  *          property="name",
  *          type="string",
@@ -28,14 +29,34 @@ use OpenApi\Annotations as OA;
  *          description="The price of the product"
  *     ),
  *     @OA\Property(
- *          property="image",
- *          type="string",
- *          description="The image of the product"
- *     ),
- *     @OA\Property(
  *          property="stock",
  *          type="integer",
  *          description="The stock of the product"
+ *     ),
+ *     @OA\Property(
+ *          property="image",
+ *          type="string",
+ *          example="images/uploads/2024/05/02/image.jpg",
+ *          description="The image URL of the user"
+ *     ),
+ *     @OA\Property(
+ *         property="created_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-05-06T12:34:56Z",
+ *         description="The timestamp when the user was created"
+ *     ),
+ *     @OA\Property(
+ *         property="updated_at",
+ *         type="string",
+ *         format="date-time",
+ *         example="2024-05-06T12:34:56Z",
+ *         description="The timestamp when the user was last updated"
+ *     ),
+ *     @OA\Property(
+ *         property="categories",
+ *         type="array",
+ *         @OA\Items(ref="#/components/schemas/Category")
  *     )
  * )
  */
