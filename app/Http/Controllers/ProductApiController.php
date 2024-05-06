@@ -55,7 +55,22 @@ class ProductApiController extends Controller
      *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"name", "description", "price", "stock", "categories", "imagefile"},
+     *                 @OA\Property(property="name", type="string", example="Productname"),
+     *                 @OA\Property(property="description", type="string", example="Product description"),
+     *                 @OA\Property(property="price", type="number", format="float", example="12.25"),
+     *                 @OA\Property(property="stock", type="integer", example="10"),
+     *                 @OA\Property(
+     *                     property="categories",
+     *                     type="array",
+     *                     @OA\Items(type="integer", format="int64", example="1")
+     *                 ),
+     *                 @OA\Property(property="imagefile", type="string", format="binary")
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -167,7 +182,22 @@ class ProductApiController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"name", "description", "price", "stock", "categories", "imagefile"},
+     *                 @OA\Property(property="name", type="string", example="Productname"),
+     *                 @OA\Property(property="description", type="string", example="Product description"),
+     *                 @OA\Property(property="price", type="number", format="float", example="12.25"),
+     *                 @OA\Property(property="stock", type="integer", example="10"),
+     *                 @OA\Property(
+     *                     property="categories",
+     *                     type="array",
+     *                     @OA\Items(type="integer", format="int64", example="1")
+     *                 ),
+     *                 @OA\Property(property="imagefile", type="string", format="binary")
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,

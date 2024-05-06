@@ -51,7 +51,15 @@ class CategoryApiController extends Controller
      *     security={{ "sanctum": {} }},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"title", "description"},
+     *                 @OA\Property(property="title", type="string"),
+     *                 @OA\Property(property="description", type="string"),
+     *                 example={"title": "Category Title", "description": "Category Description"}
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -145,7 +153,15 @@ class CategoryApiController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Category")
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"title", "description"},
+     *                 @OA\Property(property="title", type="string"),
+     *                 @OA\Property(property="description", type="string"),
+     *                 example={"title": "Category Title", "description": "Category Description"}
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
