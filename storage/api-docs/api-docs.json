@@ -13,6 +13,34 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/welcome": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Display a welcome message",
+                "description": "Display a welcome message.",
+                "operationId": "eb2b69deaf7cfb3f2941fe040be73944",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Stock Management App"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/categories": {
             "get": {
                 "tags": [

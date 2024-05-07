@@ -2,17 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\CategoryApiController;
 
 Route::prefix('v1')->group(function () {
 
-    Route::get('/welcome', function (Request $request) {
-        return response()->json([
-            'title' => 'Stock Management App',
-        ]);
-    });
+    Route::get('/welcome', [ApiController::class,'index'])->name('api.welcome');
 
     Route::resource('products', ProductApiController::class)
         ->middleware('auth:sanctum')
