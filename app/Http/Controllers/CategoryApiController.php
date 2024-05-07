@@ -17,7 +17,6 @@ class CategoryApiController extends Controller
      *     path="/api/v1/categories",
      *     summary="Get all categories",
      *     tags={"Categories"},
-     *     security={{ "sanctum": {} }},
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
