@@ -19,7 +19,7 @@ use OpenApi\Annotations as OA;
  * )
  */
 
-abstract class ApiController
+class ApiController extends Controller
 {
     /**
      * Display a welcome message.
