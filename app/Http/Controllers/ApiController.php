@@ -40,7 +40,8 @@ class ApiController extends Controller
     public function index()
     {
         return response()->json([
-            'title' => 'Stock Management App',
+            'title' => '<h2>Stock Management App</h2>
+<p>Please log in to manage inventory.</p>',
         ]);
     }
 }
